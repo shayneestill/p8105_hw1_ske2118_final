@@ -1,14 +1,11 @@
 ---
-title: "Simple document"
-author: Shayne Estill
-date: 2024-09-12
-output: 
-  html_document:
-    toc: true
-    toc_float: true 
+title: "p8105_hw1_ske2118_final"
+author: "Shayne Estill"
+date: "2024-09-21"
+output: github_document
 
-  
 ---
+
 
 I'm an R Markdown document! 
 
@@ -50,3 +47,39 @@ The median of the variable containing absolute values is
 
 ```
 
+
+#homework 1
+{r setup, include = FALSE}
+library(tidyverse)
+
+
+#Problem 1
+{r summary, include = FALSE}
+data("penguins", package = "palmerpenguins")
+summary(penguins)
+
+
+The penguin dataset has observations about 
+  three different penguin species (adelie, chinstrap, and gentoo) on 
+  three different islands (biscoe, dream, and torgersen). 
+  
+Data collected about these penguins included 
+  bill_length_mm, bill_depth_mm, and flipper_length_mm (all measured in millimeters)
+  as well as body_mass_g (measured in grams), sex, and year. 
+  
+The penguins dataset has r nrow(penguins) rows and r ncol(penguins) columns.
+
+The mean flipper length is r mean(penguins$flipper_length_mm, na.rm = TRUE).
+
+
+##
+
+
+{r scatterplot}
+Make a scatterplot of flipper_length_mm (y) vs bill_length_mm (x); color points using the species variable (adding color = ... inside of aes in your ggplot code should help).
+
+Export your first scatterplot to your project directory using ggsave.
+
+ggplot(plot_penguin, aes(x = bill_length_mm, y = flipper_length_mm)) + geom_point()
+
+  

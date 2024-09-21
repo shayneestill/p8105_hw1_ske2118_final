@@ -1,0 +1,93 @@
+---
+title: "p8105_hw1_ske2118_final"
+author: "Shayne Estill"
+date: "2024-09-21"
+output: github_document
+---
+
+# Homework 1 Set up 
+
+Here's a **code chunk** that loads tidyverse: 
+
+```{r setup, include = FALSE}
+library(tidyverse)
+```
+
+
+# Problem 1
+
+Here we load our penguin data: 
+
+```{r summary, include = FALSE}
+data("penguins", package = "palmerpenguins")
+summary(penguins)
+```
+
+The penguin dataset has observations about 
+  three different penguin species (adelie, chinstrap, and gentoo) on 
+  three different islands (biscoe, dream, and torgersen). 
+  
+Data collected about these penguins included 
+  bill_length_mm, bill_depth_mm, and flipper_length_mm (all measured in millimeters)
+  as well as body_mass_g (measured in grams), sex, and year. 
+  
+The penguins dataset has `r nrow(penguins)` rows and `r ncol(penguins)` columns.
+
+The mean flipper length is `r mean(penguins$flipper_length_mm, na.rm = TRUE)`.
+
+
+
+```{r scatterplot, warning = FALSE}
+ggplot(penguins, aes(x = bill_length_mm, y = flipper_length_mm, color = species)) + geom_point()
+
+ggsave("scatterplot.pdf")
+```
+  
+  I produced a scatterplot of bill_length_mm to flipper_length_mm in which
+  each species is a different color point. I suppressed the warning           regarding two observations without a number value. 
+  
+# Problem 2 
+```{r dataframe}
+problem2_df = tibble(   
+  vec_numeric = rnorm(10),
+  vec_logical = vec_numeric>0,
+  vec_char = c("A", "B", "C", "D", "E", "F", "G", "H","I", "J"),
+  vec_factor = factor(c("small", "medium", "large", "small", "medium",                    "large", "small", "medium", "large", "small"))
+  )
+  
+```
+
+Now, let's look at what happens when we try to take the means. 
+```{r dataframe means}
+  mean(pull(problem2_df, vec_numeric))
+  mean(pull(problem2_df, vec_logical))
+  mean(pull(problem2_df, vec_char))
+  mean(pull(problem2_df, vec_factor))
+```
+  The vec_numeric and vec_logical are both able to produce mean values.
+  The vec_char and vec_factor are NOT able to produce mean values. 
+
+Now, let's try to explicitly convert variables from one type to another. 
+```{r dataframe coercion}
+  problem2_df|>
+  mutate(
+    vec_logical = as.numeric(vec_logical),
+    vec_char = as.numeric(vec_char),
+    vec_factor = as.numeric(vec_factor)
+  )
+```
+When we applied the as.numeric function to our dataframe, we see that all vectors 
+except for the character vector are able to be converted to numeric. 
+This is because the factor variable was able to be successfully converted as for factor variables they can recognize the characters by their alphabetical order
+and rank them in that way. However the character vector do not have any kind of factor
+they can be ranked by and thus we see the NA output for vec_char. 
+
+```{r dataframe coercion mean}
+   mean(pull(problem2_df, vec_logical))
+  mean(pull(problem2_df, vec_char))
+  mean(pull(problem2_df, vec_factor))
+```
+
+This somewhat helps explain what happens when we try to take the mean in that 
+we still are not able to calculate means for character and factor variables and
+we receive NA errors. 
