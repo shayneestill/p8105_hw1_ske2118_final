@@ -1,0 +1,52 @@
+---
+title: "Simple document"
+author: Shayne Estill
+date: 2024-09-12
+output: 
+  html_document:
+    toc: true
+    toc_float: true 
+
+  
+---
+
+I'm an R Markdown document! 
+
+# Section 1
+
+Here's a **code chunk** that samples from 
+a _normal distribution_:
+
+```{r}
+samp = rnorm(100)
+length(samp)
+```
+
+# Section 2
+
+I can take the mean of the sample, too!
+The mean is `r mean(samp)`.
+
+#learning assessment#
+
+```{r learning_assessment_1}
+library(tidyverse)
+
+la_df = tibble(
+  norm_samp = rnorm(500, mean = 1),
+  norm_samp_pos = norm_samp > 0,
+  abs_norm_samp = abs(norm_samp)
+)
+
+ggplot(la_df, aes(x = abs_norm_samp)) + geom_histogram()
+
+median_samp = median(pull(la_df, norm_samp))
+```
+
+The median of the variable containing absolute values is 
+`r round(median_samp, digits = 2)`.
+
+```{r}
+
+```
+
